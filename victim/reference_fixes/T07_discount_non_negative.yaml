@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T07_discount_non_negative
+replacements:
+  - file: shop/services/discounts.py
+    old: "    return total\n"
+    new: "    return max(total, 0)\n"

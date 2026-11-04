@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T02_refund_non_positive
+replacements:
+  - file: shop/services/refunds.py
+    old: "    remaining = order.total_cents\n"
+    new: "    if amount_cents <= 0:\n        raise RefundError(f\"refund must be positive, got {amount_cents}\")\n    remaining = order.total_cents\n"

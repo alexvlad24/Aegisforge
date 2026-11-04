@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T06_fx_as_of
+replacements:
+  - file: shop/services/fx.py
+    old: "select(FxRate).where(FxRate.currency == currency).order_by(FxRate.as_of.desc()).limit(1)"
+    new: "select(FxRate).where(FxRate.currency == currency, FxRate.as_of <= on).order_by(FxRate.as_of.desc()).limit(1)"

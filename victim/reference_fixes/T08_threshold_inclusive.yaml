@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T08_threshold_inclusive
+replacements:
+  - file: shop/services/discounts.py
+    old: "        if subtotal_cents > rule.min_spend_cents:\n"
+    new: "        if subtotal_cents >= rule.min_spend_cents:\n"

@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T04_zero_rate
+replacements:
+  - file: shop/services/vat.py
+    old: "    rate = VAT_RATES_PERCENT.get(category) or VAT_RATES_PERCENT[\"standard\"]\n    return rate\n"
+    new: "    return VAT_RATES_PERCENT[category]\n"

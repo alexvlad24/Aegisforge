@@ -1,0 +1,9 @@
+# Reference fix (never copied into the workspace). Exact-string replacements, each must match once.
+task: T01_refund_cumulative_cap
+replacements:
+  - file: shop/services/refunds.py
+    old: "from sqlalchemy.orm import Session\n"
+    new: "from sqlalchemy import func, select\nfrom sqlalchemy.orm import Session\n"
+  - file: shop/services/refunds.py
+    old: "    remaining = order.total_cents\n"
+    new: "    refunded = session.scalar(\n        select(func.coalesce(func.sum(Refund.amount_cents), 0)).where(Refund.order_id == order_id)\n    )\n    remaining = order.total_cents - refunded\n"

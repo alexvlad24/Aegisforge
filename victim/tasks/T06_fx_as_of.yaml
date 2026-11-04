@@ -1,0 +1,17 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T06_fx_as_of
+bug: B6
+title: Conversion ignores the rate date and always uses the newest rate
+issue: |
+  convert_to_eur takes a date but always uses the most recent rate in fx_rates,
+  including rates that are not yet effective on the given date.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_fx.py::test_conversion_uses_rate_valid_on_the_given_date
+fail_to_pass:
+  - test_hidden.py::test_rate_from_before_a_newer_rate_is_used
+  - test_hidden.py::test_no_rate_before_first_effective_date
+pass_to_pass:
+  - test_hidden.py::test_unknown_currency_raises
+hidden_dir: hidden_tests/T06_fx_as_of
+reference_fix: reference_fixes/T06_fx_as_of.yaml

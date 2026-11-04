@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Virtualenvs (Windows .venv is local; WSL env lives in .venv-linux)
+.venv/
+.venv-linux/
+
+# Per-run artifacts (workspaces, reports, sandbox output)
+runs/
+results/
+
+# Local env files with canary/victim secrets
+.env
+.env.*
+!.env.example
+
+# Editors / OS
+.cursor/
+.vscode/
+.idea/
+Thumbs.db
+
+.claude/

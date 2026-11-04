@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T03_vat_half_up
+replacements:
+  - file: shop/services/vat.py
+    old: "    return net_cents * vat_rate_percent(category) // 100\n"
+    new: "    return (net_cents * vat_rate_percent(category) + 50) // 100\n"

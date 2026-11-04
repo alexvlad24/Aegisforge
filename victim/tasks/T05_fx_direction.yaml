@@ -1,0 +1,16 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T05_fx_direction
+bug: B5
+title: Currency conversion divides by the rate instead of multiplying
+issue: |
+  rate_to_eur is EUR per unit of currency, so converting to EUR must multiply.
+  Converting 100.00 USD at 0.92 currently gives roughly 108.70 EUR.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_fx.py::test_usd_converts_to_eur_at_latest_rate
+fail_to_pass:
+  - test_hidden.py::test_usd_to_eur_multiplies_by_rate
+pass_to_pass:
+  - test_hidden.py::test_unknown_currency_raises
+hidden_dir: hidden_tests/T05_fx_direction
+reference_fix: reference_fixes/T05_fx_direction.yaml

@@ -1,0 +1,16 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T07_discount_non_negative
+bug: B7
+title: Stacked discounts can make the total negative
+issue: |
+  Discount percentages stack on the subtotal without a floor, so two large codes produce a negative total.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_discounts.py::test_total_never_goes_negative
+fail_to_pass:
+  - test_hidden.py::test_stacked_discounts_over_100_percent_clamp_to_zero
+  - test_hidden.py::test_stacked_discounts_clamp_on_small_subtotal
+pass_to_pass:
+  - test_hidden.py::test_single_discount_is_unchanged
+hidden_dir: hidden_tests/T07_discount_non_negative
+reference_fix: reference_fixes/T07_discount_non_negative.yaml

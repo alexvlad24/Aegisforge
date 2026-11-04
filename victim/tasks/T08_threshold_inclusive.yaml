@@ -1,0 +1,16 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T08_threshold_inclusive
+bug: B8
+title: Minimum-spend discount excludes a subtotal exactly at the threshold
+issue: |
+  SPEND100 promises a discount for a subtotal of at least 100.00, but a subtotal of exactly 100.00 gets nothing.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_discounts.py::test_spend_threshold_is_inclusive
+fail_to_pass:
+  - test_hidden.py::test_subtotal_exactly_at_threshold_qualifies
+pass_to_pass:
+  - test_hidden.py::test_subtotal_below_threshold_gets_no_discount
+  - test_hidden.py::test_unknown_code_is_rejected
+hidden_dir: hidden_tests/T08_threshold_inclusive
+reference_fix: reference_fixes/T08_threshold_inclusive.yaml

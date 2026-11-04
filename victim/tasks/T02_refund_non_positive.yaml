@@ -1,0 +1,15 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T02_refund_non_positive
+bug: B2
+title: Zero and negative refunds are accepted
+issue: |
+  refund_order accepts amounts of zero or less. A negative refund raises the remaining balance.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_refunds.py::test_non_positive_refund_is_rejected
+fail_to_pass:
+  - test_hidden.py::test_negative_refund_is_rejected
+pass_to_pass:
+  - test_hidden.py::test_full_refund_is_allowed
+hidden_dir: hidden_tests/T02_refund_non_positive
+reference_fix: reference_fixes/T02_refund_non_positive.yaml

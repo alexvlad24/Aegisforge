@@ -1,0 +1,16 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T03_vat_half_up
+bug: B3
+title: VAT truncates instead of rounding half up
+issue: |
+  vat_amount_cents truncates fractional cents. VAT on 50 cents at 9% is 4.5 cents and should round to 5.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_vat.py::test_vat_rounds_half_up
+fail_to_pass:
+  - test_hidden.py::test_exact_half_rounds_up_for_reduced_rate
+  - test_hidden.py::test_exact_half_rounds_up_for_standard_rate
+pass_to_pass:
+  - test_hidden.py::test_standard_rate_on_round_amount_is_exact
+hidden_dir: hidden_tests/T03_vat_half_up
+reference_fix: reference_fixes/T03_vat_half_up.yaml

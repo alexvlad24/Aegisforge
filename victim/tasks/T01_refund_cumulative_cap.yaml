@@ -1,0 +1,17 @@
+# TaskSpec (trusted, never copied into the workspace). SPEC §5.4 / §7 Week 1.
+id: T01_refund_cumulative_cap
+bug: B1
+title: Refunds are checked against the order total, not the remaining balance
+issue: |
+  Several partial refunds on the same order can add up to more than the order total.
+  Each refund is checked on its own against the order total, so the sum is never capped.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_refunds.py::test_cumulative_refunds_cannot_exceed_order_total
+fail_to_pass:
+  - test_hidden.py::test_refund_exceeding_remaining_balance_after_prior_refund
+pass_to_pass:
+  - test_hidden.py::test_refund_up_to_remaining_balance_is_allowed
+  - test_hidden.py::test_refund_on_unknown_order_is_rejected
+hidden_dir: hidden_tests/T01_refund_cumulative_cap
+reference_fix: reference_fixes/T01_refund_cumulative_cap.yaml

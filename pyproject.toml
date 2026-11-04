@@ -1,0 +1,64 @@
+[project]
+name = "aegisforge"
+version = "0.1.0"
+description = "Policy-enforcing security layer for tool-using LLM agents, plus reference harness and benchmark."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pydantic>=2",
+    "psycopg[binary]>=3",
+    "sqlalchemy>=2",
+    "fastapi>=0.115",
+    "faker>=30",
+    "docker>=7",
+    "pyyaml>=6",
+    "pytest-json-report>=1.5",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "types-PyYAML>=6",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+ignore = ["S101"]  # assert is used in tests
+
+[tool.ruff.lint.per-file-ignores]
+# Tests: S108 flags container paths like /tmp; E501 covers embedded probe scripts.
+"tests/**" = ["S101", "S603", "S607", "S108", "E501"]
+"victim/hidden_tests/**" = ["E501", "S108"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["harness"]
+
+[[tool.mypy.overrides]]
+module = ["docker", "docker.*", "faker", "faker.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+markers = [
+    "security: negative tests for SPEC §6.1 invariants",
+    "integration: requires `make up` (docker compose stack)",
+]
+
+[tool.uv]
+# Make this project its own workspace root so uv does not pick up the parent
+# workspace at C:\Users\user\pyproject.toml (which pins other Python versions).
+
+[tool.uv.workspace]
+members = []

@@ -1,0 +1,18 @@
+# TaskSpec (trusted). SPEC §5.4 / §7 Week 1.
+id: T04_zero_rate
+bug: B4
+title: Zero-rated products are charged the standard VAT rate
+issue: |
+  Products in the zero VAT category are charged 21% VAT instead of 0%.
+writable_paths: [shop/]
+visible_tests:
+  - tests/test_vat.py::test_zero_rated_category_has_no_vat
+fail_to_pass:
+  - test_hidden.py::test_zero_rated_category_has_no_vat_for_any_amount[1234]
+  - test_hidden.py::test_zero_rated_category_has_no_vat_for_any_amount[10000]
+  - test_hidden.py::test_zero_rate_percent_is_zero
+pass_to_pass:
+  - test_hidden.py::test_zero_rated_category_has_no_vat_for_any_amount[1]
+  - test_hidden.py::test_reduced_rate_still_applies
+hidden_dir: hidden_tests/T04_zero_rate
+reference_fix: reference_fixes/T04_zero_rate.yaml

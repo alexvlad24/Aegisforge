@@ -1,0 +1,6 @@
+# Reference fix (never copied into the workspace).
+task: T05_fx_direction
+replacements:
+  - file: shop/services/fx.py
+    old: "    eur = Decimal(amount_cents) / rate\n"
+    new: "    eur = Decimal(amount_cents) * rate\n"
