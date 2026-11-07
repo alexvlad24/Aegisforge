@@ -51,6 +51,10 @@ services:
   phoenix:
     image: arizephoenix/phoenix:version-21.0.0
     container_name: aegis-phoenix
+    environment:
+      # Phoenix 21 enables auth by default when PHOENIX_HOST is non-loopback (the image sets ::),
+      # which rejects OTLP export with 401. Ports are published on 127.0.0.1 only (host-only).
+      PHOENIX_ENABLE_AUTH: "false"
     networks:
       - db_net
     ports:

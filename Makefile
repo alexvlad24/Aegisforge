@@ -6,10 +6,10 @@ export PYTHONPATH := $(CURDIR)
 COMPOSE := docker compose --project-directory . -f infra/docker-compose.yml --env-file .env
 SANDBOX_IMAGE := aegis-sandbox:latest
 
-.PHONY: check env up down build-sandbox seed lint typecheck test test-unit test-security test-integration clean-runs
+.PHONY: check env up down build-sandbox seed migrate lint typecheck test test-unit test-security test-integration clean-runs
 
 # Acceptance gate for every week (SPEC Appendix B).
-check: up seed lint typecheck test
+check: up seed migrate lint typecheck test
 
 env:
 	uv run python scripts/make_env.py
@@ -26,6 +26,10 @@ build-sandbox:
 
 seed:
 	uv run python victim/seed.py
+
+# harness_db.agent_events (append-only event log, SPEC §5.4). Idempotent.
+migrate:
+	uv run python -m harness.store migrate
 
 lint:
 	uv run ruff check .

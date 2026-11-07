@@ -1,0 +1,42 @@
+# Model IDs per role and token prices (SPEC §2). The only place model IDs are configured.
+# Provider: OpenAI SDK. API key comes from the OPENAI_API_KEY environment variable / .env.
+
+provider = "openai"
+
+[roles.p_llm]        # agent loop and manifest planner
+model = "gpt-4o-mini"
+temperature = 0.0
+max_completion_tokens = 2048
+
+[roles.q_llm]        # quarantine extractor (Week 7)
+model = "gpt-4o-mini"
+
+[roles.judge]        # action-only judge (Week 8)
+model = "gpt-4o-mini"
+
+[roles.synthesizer]  # defense synthesizer (Week 11)
+model = "gpt-4o-mini"
+
+[roles.transposer]   # attack transposer (Week 9)
+model = "gpt-4o-mini"
+
+[roles.attacker]     # adaptive attacker (Week 11)
+model = "gpt-4o-mini"
+
+# USD per 1M tokens. OWNER: verify against the provider's current price page.
+# cached_input applies to prompt tokens reported in usage.prompt_tokens_details.cached_tokens.
+[prices."gpt-4o-mini"]
+input = 0.15
+cached_input = 0.075
+output = 0.60
+
+[budget]
+# Global cap across ALL runs, summed from billed ModelTurn events in harness_db (SPEC §2: $45).
+total_usd_cap = 45.0
+
+[budget.run_defaults]
+# Per-run circuit breaker; each can be overridden on the `aegis run` command line.
+max_usd = 0.50
+max_tokens = 1_500_000
+max_steps = 40
+max_wall_s = 900

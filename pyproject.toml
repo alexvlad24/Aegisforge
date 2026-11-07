@@ -12,6 +12,10 @@ dependencies = [
     "docker>=7",
     "pyyaml>=6",
     "pytest-json-report>=1.5",
+    "openai>=3.45.0",
+    "typer>=0.27.3",
+    "opentelemetry-sdk>=1.45.2",
+    "opentelemetry-exporter-otlp-proto-http>=1.45.2",
 ]
 
 [dependency-groups]
@@ -22,9 +26,17 @@ dev = [
     "types-PyYAML>=6",
 ]
 
+[project.scripts]
+aegis = "harness.cli:main"
+
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# Flat layout: the importable package is the top-level harness/ (gateway/ joins in Week 5).
+module-root = ""
+module-name = "harness"
 
 [tool.ruff]
 line-length = 100
